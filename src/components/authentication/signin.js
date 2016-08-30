@@ -16,16 +16,17 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       username: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     };
   },
   onPress: function() {
-    Api.auth.logIn(this.state.username, this.state.password)
-      .then(function(response) {
-        console.log('response', response.body);
-      }, function(err) {
-        console.log('err', err);
-      });
+    Api.auth.logIn(this.state.username, this.state.password, {
+      success: (response) => {
+        // Will clear errorMessage if error key does not exist on body
+        this.setState({errorMessage: response.body.error});
+      }
+    });
   },
   render: function() {
     return (
@@ -48,6 +49,7 @@ module.exports = React.createClass({
           style={styles.input}
           />
 
+        <Text style={styles.label}>{this.state.errorMessage}</Text>
         <Button text={'Sign In'} onPress={this.onPress} />
       </View>
     );
