@@ -23,8 +23,11 @@ module.exports = React.createClass({
   onPress: function() {
     Api.auth.logIn(this.state.username, this.state.password, {
       success: (response) => {
-        // Will clear errorMessage if error key does not exist on body
-        this.setState({errorMessage: response.body.error});
+        if (response.body.error) {
+          this.setState({errorMessage: response.body.error});
+        } else if (response.body.user) {
+          this.setState({errorMessage: ''});
+        }
       }
     });
   },
