@@ -1,19 +1,11 @@
 import agent from 'superagent';
 const rootUrl = 'https://glacial-mountain-4423.herokuapp.com';
 
+const handleErr = (err) => {
+  console.warn('err', err);
+}
+
 module.exports = {
-  users: {
-    all: function() {
-      const path = `${rootUrl}/users.json`;
-      return fetch(path)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(json) {
-          return json;
-        });
-    }
-  },
 
   auth: {
     logIn: function(username, password, callbacks) {
@@ -25,9 +17,7 @@ module.exports = {
           email: username,
           password: password
         }))
-        .then(callbacks.success, function(err) {
-          console.warn('err', err);
-        });
+        .then(callbacks.success, handleErr);
     }
   },
 
@@ -35,16 +25,25 @@ module.exports = {
     all: function(callbacks) {
       const path = `${rootUrl}/api/books`;
       agent.get(path)
-        .then(callbacks.success, function(err) {
-          console.warn('err', err);
-        });
+        .then(callbacks.success, handleErr);
     },
     bookQuotes: function(bookId, callbacks) {
       const path = `${rootUrl}/api/books/${bookId}/quotes`;
       agent.get(path)
-        .then(callbacks.success, function(err) {
-          console.warn('err', err);
-        });
+        .then(callbacks.success, handleErr);
+    }
+  },
+
+  tags: {
+    all: function(callbacks) {
+      const path = `${rootUrl}/api/tags`;
+      agent.get(path)
+        .then(callbacks.success, handleErr);
+    },
+    tagQuotes: function(tagName, callbacks) {
+      const path = `${rootUrl}/api/quotes/${tagName}`;
+      agent.get(path)
+        .then(callbacks.success, handleErr);
     }
   }
 }

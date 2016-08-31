@@ -4,20 +4,18 @@ import React, { Component } from 'react';
 
 import {
   StyleSheet,
-  ListView
+  ListView,
 } from 'react-native';
 
-import QuoteListItem from './quote_list_item';
+import TagListItem from './tag_list_item';
 
 module.exports = React.createClass({
   renderRow(rowData) {
     return (
-      <QuoteListItem
-        body={rowData.body}
-        quoteId={rowData.id}
-        bookName={rowData.book_name}
-        author={rowData.book_author}
-        bookId={rowData.book_id}
+      <TagListItem
+        name={rowData.name}
+        count={rowData.taggings_count}
+        tagId={rowData.id}
         navigator={this.props.navigator}
       />
     );
@@ -25,7 +23,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <ListView
-        dataSource={this.props.quotes}
+        dataSource={this.props.tags}
         renderRow={this.renderRow}
         style={styles.container}
       />

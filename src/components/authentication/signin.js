@@ -30,7 +30,7 @@ module.exports = React.createClass({
           this.setState({errorMessage: ''});
           AsyncStorage.setItem('@quota:user:email', response.body.user.email)
           .then(() => {
-            this.props.navigator.immediatelyResetRouteStack([{name: 'books'}]);
+            this.props.navigator.immediatelyResetRouteStack([{name: 'menu'}]);
           });
         }
       }

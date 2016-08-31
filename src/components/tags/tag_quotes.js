@@ -5,11 +5,10 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  ListView,
   ScrollView,
-  AsyncStorage
+  ListView
 } from 'react-native';
+
 import Api from '../common/api';
 import QuoteList from '../quotes/quote_list';
 import LoadScreen from '../common/load_screen';
@@ -23,15 +22,14 @@ module.exports = React.createClass({
     };
   },
   componentWillMount: function() {
-    setTimeout(() => { this.fetchBookQuotes(); }, 500);
+    setTimeout(() => { this.fetchTagQuotes(); }, 500);
   },
-  fetchBookQuotes: function() {
-    Api.books.bookQuotes(this.props.route.bookId, {
+  fetchTagQuotes: function() {
+    Api.tags.tagQuotes(this.props.route.tagName, {
       success: (response) => {
         if (response.body.error) {
-          this.setState({errorMessage: response.body.error});
+          console.warn(response.body);
         } else if (response.body.quotes) {
-          response.body.quotes.map(this.cacheBookQuote);
           let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r1});
           this.setState({
             quotes: ds.cloneWithRows(response.body.quotes),
@@ -41,12 +39,6 @@ module.exports = React.createClass({
       }
     });
   },
-  cacheBookQuote: function(quote) {
-    AsyncStorage.setItem(
-      `@quota:book:${this.props.route.bookId}:quote:${quote.id}`,
-      JSON.stringify(quote)
-    );
-  },
   render: function() {
     if (!this.state.quotesLoaded) {
       return <LoadScreen />;
@@ -55,7 +47,7 @@ module.exports = React.createClass({
         <ScrollView>
           <View style={styles.container}>
             <QuoteList
-              bookId={this.props.route.bookId}
+              tagName={this.props.route.tagName}
               quotes={this.state.quotes}
               navigator={this.props.navigator} />
           </View>
@@ -66,10 +58,5 @@ module.exports = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 30
-  },
+
 });

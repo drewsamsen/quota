@@ -27,6 +27,8 @@ module.exports = React.createClass({
           <Text style={styles.quoteBody}>
             {this.props.body}
           </Text>
+          <Text style={styles.bookName}>{this.props.bookName}</Text>
+          <Text style={styles.author}>{this.props.author}</Text>
         </View>
       </TouchableHighlight>
     );
@@ -35,12 +37,21 @@ module.exports = React.createClass({
 
 const styles = StyleSheet.create({
   quoteItem: {
-    padding: 22,
+    padding: 32,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#CCCCCC'
   },
   quoteBody: {
     fontSize: 16,
-    lineHeight: 28
+    lineHeight: 28,
+    paddingBottom: 20
+  },
+  bookName: {
+    fontSize: 14,
+    color: '#777777'
+  },
+  author: {
+    fontSize: 11,
+    color: '#777777'
   }
 });
