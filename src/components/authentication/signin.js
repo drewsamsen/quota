@@ -6,7 +6,8 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
 
 import Button from '../common/button';
@@ -27,6 +28,10 @@ module.exports = React.createClass({
           this.setState({errorMessage: response.body.error});
         } else if (response.body.user) {
           this.setState({errorMessage: ''});
+          AsyncStorage.setItem('@quota:user:email', response.body.user.email)
+          .then(() => {
+            this.props.navigator.immediatelyResetRouteStack([{name: 'books'}]);
+          });
         }
       }
     });

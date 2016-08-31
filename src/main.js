@@ -6,10 +6,12 @@ import {
 
 import SignIn from './components/authentication/signin';
 import SignUp from './components/authentication/signup';
+import Books from './components/books/books';
 
 const ROUTES = {
   signin: SignIn,
-  signup: SignUp
+  signup: SignUp,
+  books: Books
 }
 
 module.exports = React.createClass({
