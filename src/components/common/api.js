@@ -4,7 +4,7 @@ const rootUrl = 'https://glacial-mountain-4423.herokuapp.com';
 module.exports = {
   users: {
     all: function() {
-      let path = `${rootUrl}/users.json`;
+      const path = `${rootUrl}/users.json`;
       return fetch(path)
         .then(function(response) {
           return response.json();
@@ -17,7 +17,7 @@ module.exports = {
 
   auth: {
     logIn: function(username, password, callbacks) {
-      let path = `${rootUrl}/api/login`;
+      const path = `${rootUrl}/api/login`;
       agent.post(path)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
@@ -25,6 +25,16 @@ module.exports = {
           email: username,
           password: password
         }))
+        .then(callbacks.success, function(err) {
+          console.warn('err', err);
+        });
+    }
+  },
+
+  books: {
+    all: function(callbacks) {
+      const path = `${rootUrl}/api/books`;
+      agent.get(path)
         .then(callbacks.success, function(err) {
           console.warn('err', err);
         });

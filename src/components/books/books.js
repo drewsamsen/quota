@@ -6,13 +6,21 @@ import {
   StyleSheet,
   View,
   Text,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator,
+  ScrollView,
+  ListView
 } from 'react-native';
+
+import Api from '../common/api';
 
 module.exports = React.createClass({
   getInitialState: function() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r1});
     return {
-      user: null
+      user: null,
+      books: ds.cloneWithRows([]),
+      booksLoaded: false
     };
   },
   componentWillMount: function() {
@@ -20,15 +28,55 @@ module.exports = React.createClass({
     .then((value) => {
       this.setState({user: value});
     });
+    setTimeout(() => { this.fetchBooks(); }, 1000);
+  },
+  fetchBooks: function() {
+    Api.books.all({
+      success: (response) => {
+        if (response.body.error) {
+          this.setState({errorMessage: response.body.error});
+        } else if (response.body.books) {
+          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r1});
+          this.setState({
+            books: ds.cloneWithRows(response.body.books),
+            booksLoaded: true
+          });
+        }
+      }
+    });
+  },
+  renderRow(rowData) {
+    return (
+      <View style={styles.bookItem}>
+        <Text style={styles.bookTitle}>{rowData.name}</Text>
+        <Text style={styles.bookAuthor}>{rowData.author}</Text>
+      </View>
+    );
   },
   render: function() {
-
-    return (
-      <View style={styles.container}>
-        <Text>Welcome back, {this.state.user}!</Text>
-        <Text>Soon you can see all your books here.</Text>
-      </View>
-    )
+    if (this.state.user == null || !this.state.booksLoaded) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={true}
+            style={styles.spinner}
+            size="large"
+          />
+        </View>
+      );
+    } else {
+      return (
+        <ScrollView>
+          <View style={styles.container}>
+            <Text>Welcome back, {this.state.user}!</Text>
+            <ListView
+              dataSource={this.state.books}
+              renderRow={this.renderRow}
+            />
+          </View>
+        </ScrollView>
+      );
+    }
   }
 });
 
@@ -37,5 +85,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  spinner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8
+  },
+  bookItem: {
+    padding: 8
+  },
+  bookTitle: {
+    fontSize: 20
+  },
+  bookAuthor: {
+    fontSize: 14
   }
 });
