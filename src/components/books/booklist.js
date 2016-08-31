@@ -12,7 +12,11 @@ import BookListItem from './booklistitem';
 module.exports = React.createClass({
   renderRow(rowData) {
     return (
-      <BookListItem name={rowData.name} author={rowData.author} />
+      <BookListItem
+        name={rowData.name}
+        author={rowData.author}
+        bookId={rowData.id}
+      />
     );
   },
   render: function() {

@@ -7,13 +7,13 @@ import {
   View,
   Text,
   AsyncStorage,
-  ActivityIndicator,
   ScrollView,
   ListView
 } from 'react-native';
 
 import Api from '../common/api';
 import BookList from './booklist';
+import LoadScreen from '../common/load_screen';
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -48,15 +48,7 @@ module.exports = React.createClass({
   },
   render: function() {
     if (this.state.user == null || !this.state.booksLoaded) {
-      return (
-        <View style={styles.container}>
-          <ActivityIndicator
-            animating={true}
-            style={styles.spinner}
-            size="large"
-          />
-        </View>
-      );
+      return <LoadScreen />;
     } else {
       return (
         <ScrollView>
@@ -76,10 +68,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 20
-  },
-  spinner: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 8
   }
 });

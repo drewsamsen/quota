@@ -6,15 +6,24 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight
 } from 'react-native';
 
 module.exports = React.createClass({
+  onPress: function() {
+    console.log('book id ' + this.props.bookId);
+  },
   render: function() {
     return (
-      <View style={styles.bookItem}>
-        <Text style={styles.bookTitle}>{this.props.name}</Text>
-        <Text style={styles.bookAuthor}>{this.props.author}</Text>
-      </View>
+      <TouchableHighlight
+        underlayColor={'gray'}
+        onPress={this.onPress}
+        style={styles.bookItem}>
+        <View>
+          <Text style={styles.bookTitle}>{this.props.name}</Text>
+          <Text style={styles.bookAuthor}>{this.props.author}</Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 });
