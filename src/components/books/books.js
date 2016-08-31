@@ -37,6 +37,7 @@ module.exports = React.createClass({
         if (response.body.error) {
           this.setState({errorMessage: response.body.error});
         } else if (response.body.books) {
+          response.body.books.map(this.cacheBook);
           let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r1});
           this.setState({
             books: ds.cloneWithRows(response.body.books),
@@ -45,6 +46,9 @@ module.exports = React.createClass({
         }
       }
     });
+  },
+  cacheBook: function(book) {
+    AsyncStorage.setItem(`@quota:book:${book.id}`, JSON.stringify(book));
   },
   render: function() {
     if (this.state.user == null || !this.state.booksLoaded) {

@@ -15,6 +15,7 @@ module.exports = React.createClass({
       <QuoteListItem
         body={rowData.body}
         quoteId={rowData.id}
+        bookId={this.props.bookId}
         navigator={this.props.navigator}
       />
     );

@@ -5,18 +5,30 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
 
 module.exports = React.createClass({
   onPress: function() {
-    this.props.navigator.push({name: 'bookQuotes', bookId: this.props.bookId})
+    this.props.navigator.push({
+      name: 'quote',
+      bookId: this.props.bookId,
+      quoteId: this.props.quoteId
+    });
   },
   render: function() {
     return (
-      <View style={styles.quoteItem}>
-        <Text style={styles.quoteBody}>{this.props.body}</Text>
-      </View>
+      <TouchableHighlight
+        underlayColor={'gray'}
+        onPress={this.onPress}
+        style={styles.quoteItem}>
+        <View>
+          <Text style={styles.quoteBody}>
+            {this.props.body}
+          </Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 });
@@ -28,7 +40,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#CCCCCC'
   },
   quoteBody: {
-    fontSize: 15,
-    lineHeight: 24
+    fontSize: 16,
+    lineHeight: 28
   }
 });

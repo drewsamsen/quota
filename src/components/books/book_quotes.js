@@ -7,7 +7,8 @@ import {
   View,
   Text,
   ListView,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
 import Api from '../common/api';
 import Button from '../common/button';
@@ -31,6 +32,7 @@ module.exports = React.createClass({
         if (response.body.error) {
           this.setState({errorMessage: response.body.error});
         } else if (response.body.quotes) {
+          response.body.quotes.map(this.cacheBookQuote);
           let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r1});
           this.setState({
             quotes: ds.cloneWithRows(response.body.quotes),
@@ -40,6 +42,12 @@ module.exports = React.createClass({
       }
     });
   },
+  cacheBookQuote: function(quote) {
+    AsyncStorage.setItem(
+      `@quota:book:${this.props.route.bookId}:quote:${quote.id}`,
+      JSON.stringify(quote)
+    );
+  },
   render: function() {
     if (!this.state.quotesLoaded) {
       return <LoadScreen />;
@@ -48,7 +56,10 @@ module.exports = React.createClass({
         <ScrollView>
           <View style={styles.container}>
             <Button text={'Back'} onPress={this.props.navigator.pop} />
-            <QuoteList quotes={this.state.quotes} />
+            <QuoteList
+              bookId={this.props.route.bookId}
+              quotes={this.state.quotes}
+              navigator={this.props.navigator} />
           </View>
         </ScrollView>
       );
