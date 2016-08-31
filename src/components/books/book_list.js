@@ -7,7 +7,7 @@ import {
   ListView
 } from 'react-native';
 
-import BookListItem from './booklistitem';
+import BookListItem from './book_list_item';
 
 module.exports = React.createClass({
   renderRow(rowData) {

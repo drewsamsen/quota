@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Api from '../common/api';
-import BookList from './booklist';
+import BookList from './book_list';
 import LoadScreen from '../common/load_screen';
 
 module.exports = React.createClass({
@@ -29,7 +29,7 @@ module.exports = React.createClass({
     .then((value) => {
       this.setState({user: value});
     });
-    setTimeout(() => { this.fetchBooks(); }, 1000);
+    setTimeout(() => { this.fetchBooks(); }, 500);
   },
   fetchBooks: function() {
     Api.books.all({

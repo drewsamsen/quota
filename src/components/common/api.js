@@ -38,6 +38,13 @@ module.exports = {
         .then(callbacks.success, function(err) {
           console.warn('err', err);
         });
+    },
+    bookQuotes: function(bookId, callbacks) {
+      const path = `${rootUrl}/api/books/${bookId}/quotes`;
+      agent.get(path)
+        .then(callbacks.success, function(err) {
+          console.warn('err', err);
+        });
     }
   }
 }

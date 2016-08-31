@@ -16,7 +16,7 @@ import Api from '../common/api';
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      username: '',
+      username: 'drewsamsen@gmail.com',
       password: '',
       errorMessage: ''
     };
