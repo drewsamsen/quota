@@ -5,15 +5,17 @@ import {
 } from 'react-native';
 
 import SignIn from './components/authentication/signin';
+import SignUp from './components/authentication/signup';
 
 const ROUTES = {
-  signin: SignIn
+  signin: SignIn,
+  signup: SignUp
 }
 
 module.exports = React.createClass({
   renderScene: function(route, navigator) {
     const Component = ROUTES[route.name];
-    return <Component />;
+    return <Component route={route} navigator={navigator} />;
   },
   render: function() {
     return (

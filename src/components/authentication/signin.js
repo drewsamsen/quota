@@ -31,6 +31,9 @@ module.exports = React.createClass({
       }
     });
   },
+  onSignupPress: function() {
+    this.props.navigator.push({name: 'signup'})
+  },
   render: function() {
     return (
       <View style={styles.container}>
@@ -54,6 +57,7 @@ module.exports = React.createClass({
 
         <Text style={styles.label}>{this.state.errorMessage}</Text>
         <Button text={'Sign In'} onPress={this.onPress} />
+        <Button text={'I need an account...'} onPress={this.onSignupPress} />
       </View>
     );
   }
