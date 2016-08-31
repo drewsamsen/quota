@@ -54,7 +54,10 @@ module.exports = React.createClass({
         <ScrollView>
           <View style={styles.container}>
             <Text>Welcome back, {this.state.user}!</Text>
-            <BookList books={this.state.books} />
+            <BookList
+              books={this.state.books}
+              navigator={this.props.navigator}
+            />
           </View>
         </ScrollView>
       );

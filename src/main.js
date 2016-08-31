@@ -7,11 +7,13 @@ import {
 import SignIn from './components/authentication/signin';
 import SignUp from './components/authentication/signup';
 import Books from './components/books/books';
+import BookQuotes from './components/books/book_quotes'
 
 const ROUTES = {
   signin: SignIn,
   signup: SignUp,
-  books: Books
+  books: Books,
+  bookQuotes: BookQuotes
 }
 
 module.exports = React.createClass({

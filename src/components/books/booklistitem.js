@@ -12,6 +12,7 @@ import {
 module.exports = React.createClass({
   onPress: function() {
     console.log('book id ' + this.props.bookId);
+    this.props.navigator.push({name: 'bookQuotes', bookId: this.props.bookId})
   },
   render: function() {
     return (

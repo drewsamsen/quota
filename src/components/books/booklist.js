@@ -16,6 +16,7 @@ module.exports = React.createClass({
         name={rowData.name}
         author={rowData.author}
         bookId={rowData.id}
+        navigator={this.props.navigator}
       />
     );
   },
