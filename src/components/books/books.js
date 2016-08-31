@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Api from '../common/api';
+import BookList from './booklist';
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -45,14 +46,6 @@ module.exports = React.createClass({
       }
     });
   },
-  renderRow(rowData) {
-    return (
-      <View style={styles.bookItem}>
-        <Text style={styles.bookTitle}>{rowData.name}</Text>
-        <Text style={styles.bookAuthor}>{rowData.author}</Text>
-      </View>
-    );
-  },
   render: function() {
     if (this.state.user == null || !this.state.booksLoaded) {
       return (
@@ -69,10 +62,7 @@ module.exports = React.createClass({
         <ScrollView>
           <View style={styles.container}>
             <Text>Welcome back, {this.state.user}!</Text>
-            <ListView
-              dataSource={this.state.books}
-              renderRow={this.renderRow}
-            />
+            <BookList books={this.state.books}/>
           </View>
         </ScrollView>
       );
@@ -85,19 +75,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 20
   },
   spinner: {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8
-  },
-  bookItem: {
-    padding: 8
-  },
-  bookTitle: {
-    fontSize: 20
-  },
-  bookAuthor: {
-    fontSize: 14
   }
 });
